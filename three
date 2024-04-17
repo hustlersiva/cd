@@ -1,0 +1,66 @@
+%{
+/* Definitions section: Include necessary header files */
+#include <stdio.h>
+%}
+
+/* Regular expressions for tokens */
+DIGIT       [0-9]
+LETTER      [a-zA-Z]
+IDENTIFIER  {LETTER}({LETTER}|{DIGIT})*
+NUMBER      ({DIGIT}+)
+ASSIGN_OP   "="
+REL_OP      "=="|"!="|"<="|">="|"<"|">"
+KEYWORD     "if"|"else"|"while"|"for"|"int"|"float"|"char"|"return"
+
+%%
+
+/* Rules section */
+{IDENTIFIER}    { printf("Identifier: %s\n", yytext); }
+{NUMBER}        { printf("Number: %s\n", yytext); }
+{ASSIGN_OP}     { printf("Assignment Operator: %s\n", yytext); }
+{REL_OP}        { printf("Relational Operator: %s\n", yytext); }
+{KEYWORD}       { printf("Keyword: %s\n", yytext); }
+.               ; /* Ignore any other characters */
+
+%%
+
+/* Main function */
+int main() {
+    yylex(); /* Call the generated lexer */
+    return 0;
+}
+
+/* Optional function to handle EOF */
+int yywrap() {
+    return 1; /* Return 1 to indicate end of input */
+}
+
+int main(int argc,char **argv) 
+{ 
+if (argc > 1) 
+{ 
+FILE *file; 
+file = fopen(argv[1],"r"); 
+if(!file) { 
+printf("could not open %s \n",argv[1]); 
+exit(0); 
+} 
+yyin = file; 
+} 
+yylex(); 
+printf("\n\n"); 
+return 0; 
+} 
+int yywrap() 
+{ 
+return 0; 
+} 
+input.txt file 
+/*comment line*/ 
+#include<stdio.h> 
+main() 
+{ 
+int a,b; 
+a=20; 
+printf("%d",a); 
+} 
