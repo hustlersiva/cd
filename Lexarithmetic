@@ -1,0 +1,45 @@
+%{
+#include <stdio.h>
+#include <ctype.h>
+%}
+
+%token NUMBER VARIABLE
+
+%left '+' '-'
+%left '*' '/'
+
+%%
+
+stmt : expr '\n' { printf("Valid Expression\n"); }
+     | error '\n' { printf("Invalid Expression\n"); }
+     ;
+
+expr : NUMBER
+     | VARIABLE
+     | expr '+' expr
+     | expr '-' expr
+     | expr '*' expr
+     | expr '/' expr
+     | '(' expr ')'
+     ;
+
+%%
+
+int main() {
+    yyparse();
+    return 0;
+}
+
+int yylex() {
+    int ch;
+    while ((ch = getchar()) == ' '); // Skip whitespace
+    if (isdigit(ch))
+        return NUMBER;
+    else if (isalpha(ch))
+        return VARIABLE;
+    return ch; // Return other characters as they are
+}
+
+void yyerror(const char *s) {
+    printf("%s\n", s);
+}
