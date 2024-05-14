@@ -1,0 +1,75 @@
+public class MainActivity extends Activity { 
+Handler hand = newHandler(); 
+Button clickme; 
+TextView timer; 
+@Override 
+public void onCreate(Bundle savedInstanceState) { 
+super.onCreate(savedInstanceState); 
+setContentView(R.layout.activity_main); 
+timer = (TextView) findViewById(R.id.timer); 
+clickme = (Button) findViewById(R.id.clickme); 
+hand.postDelayed(run, 1000); 
+}  
+Runnable run = newRunnable() { 
+@Override 
+publicvoid run() { 
+updateTime(); 
+} 
+}; 
+public void updateTime() { 
+timer.setText("" + (Integer.parseInt(timer.getText().toString()) - 1)); 
+if (Integer.parseInt(timer.getText().toString()) == 0) { 
+clickme.setVisibility(0); 
+} else { 
+hand.postDelayed(run, 1000); 
+} 
+} 
+} 
+<?xml version="1.0" encoding="utf-8"?> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+android:layout_width="fill_parent" 
+android:layout_height="fill_parent" 
+> 
+<RelativeLayout 
+android:id="@+id/firstlayout" 
+android:layout_width="fill_parent" 
+android:layout_height="wrap_content" 
+android:gravity="center" 
+android:layout_marginTop="80dp"> 
+<TextView 
+android:id="@+id/display" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:text="@string/hello_world" 
+android:textSize="19sp" /> 
+</RelativeLayout> 
+<RelativeLayout 
+android:id="@+id/secondlayout" 
+android:layout_width="fill_parent" 
+android:layout_height="wrap_content" 
+android:layout_below="@+id/firstlayout" 
+android:gravity="center"> 
+<TextView 
+android:id="@+id/timer" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:gravity="center_horizontal" 
+android:text="@string/timer" 
+android:layout_marginTop="80dp" 
+android:textSize="36sp"/> 
+</RelativeLayout> 
+<RelativeLayout 
+android:id="@+id/thirdlayout" 
+android:layout_width="fill_parent" 
+android:layout_height="wrap_content" 
+android:layout_below="@+id/secondlayout" 
+android:gravity="center"> 
+<Button 
+android:id="@+id/clickme" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:text="@string/button" 
+android:visibility="invisible" 
+android:layout_marginTop="100dp"/> 
+</RelativeLayout> 
+</RelativeLayout> 
