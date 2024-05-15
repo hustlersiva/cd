@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_SYMBOLS 15
+void main() {
+    int i = 0, x = 0;
+    char c;
+    void *add[MAX_SYMBOLS];
+    char symbol[MAX_SYMBOLS];
+    printf("Enter symbols terminated by '$': ");
+    while ((c = getchar()) != '$' && i < MAX_SYMBOLS) {
+        if (!isspace(c)) { 
+            symbol[i] = c;
+            if (isalpha(c) || isdigit(c)) {
+                add[x] = malloc(sizeof(int));
+               x++;
+            }
+            else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '=') {
+                add[x] = malloc(sizeof(int));
+                x++;
+            }
+            i++;
+        }
+    }
+    printf("\nSymbol Table:\n");
+    printf("Symbol\tType\tAddress\n");
+    for (int j = 0; j < i; j++) {
+        if (isalpha(symbol[j]) || isdigit(symbol[j])) {
+            printf("%c\tIdentifier\t%p\n", symbol[j], add[j]);
+        } else {
+            printf("%c\tOperator\t%p\n", symbol[j], add[j]);
+        }
+    }
+}
