@@ -26,6 +26,7 @@ expr : NUMBER
 %%
 
 int main() {
+     printf ("Enter an expression to validate :" );
     yyparse();
     return 0;
 }
